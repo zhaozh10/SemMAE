@@ -213,3 +213,41 @@ class ImageFolder(DatasetFolder):
                                           target_transform=target_transform,
                                           is_valid_file=is_valid_file)
         self.imgs = self.samples
+
+
+
+class Reflacx(Dataset):
+    def __init__(self, data_root: str, transforms=None) -> None:
+        
+        self.data_root=data_root
+        self.info=json.load(open(os.path.join(self.data_root,"reflacx.json")))
+        self.gaze_dir=os.path.join(self.data_root,"attention")
+        self.transforms=transforms
+        # self.vis_trans=PairedTransform(transforms[0])
+        # self.val_trans=transforms[1]
+
+    def getImgPath(self,index):
+        image_path=self.info[index]['image_path']
+        image_path=os.path.join(self.data_root,image_path)
+        return image_path
+
+    def __getitem__(self, index):
+        image_path=self.info[index]['image_path']
+        study_id=self.info[index]['study_id']
+        reflacx_id=self.info[index]['reflacx_id']
+        image_path=os.path.join(self.data_root,image_path)
+        # gaze_path=os.path.join(self.gaze_dir,study_id,f"{reflacx_id}.png")
+
+        image = Image.open(image_path).convert('RGB')
+        # gaze=Image.open(gaze_path)
+        
+        if self.transforms !=None:
+            # image,gaze=self.transforms(image,gaze)
+            image=self.transforms(image)
+        return image
+        # return {"image":image}
+        # return {"image":image,"gaze":gaze}
+    
+
+    def __len__(self):
+        return len(self.info)

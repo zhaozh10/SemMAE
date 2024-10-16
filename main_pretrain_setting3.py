@@ -29,7 +29,7 @@ import timm.optim.optim_factory as optim_factory
 
 import util.misc as misc
 from util.misc import NativeScalerWithGradNormCount as NativeScaler
-from data.folder import ImageFolder
+from data.folder import ImageFolder,Reflacx
 
 # import models_mae_setting1 as models_mae
 # import models_mae
@@ -49,7 +49,7 @@ def get_args_parser():
     # parser.add_argument('--model', default='mae_vit_large_patch16', type=str, metavar='MODEL',
     #                     help='Name of model to train')
 
-    parser.add_argument('--model', default='mae_vit_base_patch8', type=str, metavar='MODEL',
+    parser.add_argument('--model', default='mae_vit_base_patch16', type=str, metavar='MODEL',
                         help='Name of model to train')
 
     parser.add_argument('--input_size', default=112, type=int,
